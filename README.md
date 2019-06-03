@@ -133,7 +133,7 @@ isElementNode(node){
 }
 ``` 
 2. `compileElement`方法（编译元素节点方法）
-> 判断元素节点是否包含`v-model或v-text`指令
+判断元素节点是否包含`v-model或v-text`指令
 如果包含则做相应的编译
 ```
 compileElement(node){
@@ -152,9 +152,9 @@ isDirective(name){
   return name.includes('v-');
 }
 ```
-2. `compileText`方法（编译文本节点方法）
+3. `compileText`方法（编译文本节点方法）
 ```
-compileText(node){//编译{{}}
+compileText(node){//编译\{\{\}\}
   let expr=node.textContent;//取文本中的内容，进行正则匹配，然后替换
   let reg=/\{\{([^}]+)\}\}/g; //{{a}},{{b}}
   if(reg.test(expr)){
@@ -162,7 +162,7 @@ compileText(node){//编译{{}}
   }
 }
 ```
-3. `CompileUtil`方法
+4. `CompileUtil`方法
 > CompileUtil中定义了具体的针对元素节点不同指令，以及文本的编译的方法。
 
 注意：data中的数据可能是对象中嵌套对象，所以要层层取值，因此需要用到下面的`getVal`方法。
