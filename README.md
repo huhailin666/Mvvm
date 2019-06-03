@@ -1,4 +1,6 @@
 最近看了很多小伙伴写的实现MVVM框架，但是大多是列举了一堆代码，没有很清晰的讲述代码的原理，于是，我花了几天的时间，做了一下整理，看看VUE是如何实现数据双向绑定的，希望对大家学习vue数据双向绑定提供借鉴。
+[源码在此]([https://github.com/huhailin666/Mvvm](https://github.com/huhailin666/Mvvm)
+)
 ## `Vue`的数据绑定写法
 先看一下用`Vue`是怎么写的双向绑定。
 代码如下：
@@ -21,7 +23,8 @@ new Vue({
 ## 分析如何实现`Vue`数据双向绑定功能
 1. `vue`中视图上出现很多 `{{message}}`，`v-model`，`v-text`等等模板，我们要对其进行编译。
 2. 数据变化的时候，会动态更新到视图上，使用的`Object.defineProperty()`，进行数据劫持。
-3. 通过`Watcher`观察数据的变化，然后重新编译模板，渲染到视图上
+3. 通过`Watcher`观察数据的变化，然后重新编译模板，渲染到视图上  
+![image.png](https://upload-images.jianshu.io/upload_images/15725526-283aed2f89d88227.png)
 ## 具体步骤如下
 ### 步骤一
 自己定义一个`Mvvm`方法，取代`Vue`进行模板编译。
@@ -364,7 +367,7 @@ class Dep{
   }
 }
 ```
-![image.png](https://upload-images.jianshu.io/upload_images/15725526-283aed2f89d88227.png)
+
 
 `Dep`定义完后要对其进行调用
 我们注意到，在编译模板的时候，调用`new Watcher`，而`new Watcher`的时候会进行取值，而取值又会调用`Watcher`的`get`方法，因此我们可以在其中添加如下
@@ -401,20 +404,3 @@ defineReactive(obj, key, value) {
 }
 ```
 到此就实现了一个`MVVM`。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
